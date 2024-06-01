@@ -37,11 +37,14 @@ __declspec(naked) void ourfunc()
 
 DWORD WINAPI MainThread(LPVOID param)
 {
-	int hook_len = 8;
-	DWORD hook_address = 0x005F2517;
-	jmp_back = hook_address + hook_len;
+	int hook_len = 6;
+	//DWORD hook_address = 0x005F2517;
+	//jmp_back = hook_address + hook_len;
 
-	if (hookfunc((void*)hook_address, ourfunc, hook_len))
+	DWORD hook_addr = 0x003213EA;
+	jmp_back = hook_addr + hook_len;
+
+	if (hookfunc((void*)hook_addr, ourfunc, hook_len))
 	{
 		MessageBox(NULL, L"Hook worked", L"lofty_hook", MB_OK);
 	}
@@ -53,7 +56,7 @@ DWORD WINAPI MainThread(LPVOID param)
 	while (true)
 	{
 
-		if (GetAsyncKeyState(VK_END)&1)
+		if (GetAsyncKeyState(VK_HOME)&1)
 		{
 			break;
 		}
@@ -83,3 +86,6 @@ BOOL WINAPI DllMain(HINSTANCE hdll, DWORD dwreason, LPVOID lparam)
 
 	return TRUE;
 }
+
+
+
